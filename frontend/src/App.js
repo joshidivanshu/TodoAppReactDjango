@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "./components/Modal";
 import axios from "axios";
 
+const webadd = "http://localhost:8000"
 class App extends Component {
   constructor(props) {
     super(props);
@@ -16,14 +17,14 @@ class App extends Component {
       },
     };
   }
-
+  
   componentDidMount() {
     this.refreshList();
   }
 
   refreshList = () => {
     axios
-      .get("http://localhost:8000/api/todos/")
+      .get(webadd+"/api/todos/")
       .then((res) => this.setState({ todoList: res.data }))
       .catch((err) => console.log(err));
   };
@@ -37,18 +38,18 @@ class App extends Component {
 
     if (item.id) {
       axios
-        .put(`http://localhost:8000/api/todos/${item.id}/`, item)
+        .put(webadd+`/api/todos/${item.id}/`, item)
         .then((res) => this.refreshList());
       return;
     }
     axios
-      .post("http://localhost:8000/api/todos/", item)
+      .post(webadd+"/api/todos/", item)
       .then((res) => this.refreshList());
   };
 
   handleDelete = (item) => {
     axios
-      .delete(`http://localhost:8000/api/todos/${item.id}/`)
+      .delete(webadd+`/api/todos/${item.id}/`)
       .then((res) => this.refreshList());
   };
 
